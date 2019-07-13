@@ -1,3 +1,4 @@
+
 # Kendall Nicley
 # SudoSolver
 import math
@@ -94,17 +95,3 @@ class SudoSolver:
                     if self.board[row][col] == 0:
                         return self.board
         return self.board
-
-    
-def main():
-    with open('Example.json') as f:
-        data = json.load(f)
-    
-    sSolve = SudoSolver(data["Problem"])
-    sSolve.solve()
-
-    pprint(sSolve.solution)
-    print(data["Solution"] == sSolve.solution)
-
-if __name__ == "__main__":
-    main()
