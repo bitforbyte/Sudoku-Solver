@@ -1,7 +1,15 @@
 import math
+import copy
 import json
 from pprint import pprint
 
+ret = [[]]
+def setRet(value):
+    global ret
+    ret = value
+
+def getRet():
+    return ret
 
 def numInRow(number, row):
     if (number in row):
@@ -44,8 +52,12 @@ def findBlock(board):
             ret.append(block)
     return ret
 
-def findSolution(board, row, col):
-    pass
+def complete(board):
+    for row in range(len(board)):
+        for col in range(len(board[0])):
+            if board[row][col] == 0:
+                return False
+    return True
 
 def solveSudoku(board):
     for row in range(len(board)):
@@ -59,7 +71,9 @@ def solveSudoku(board):
                     
                     if ((not inRow) and (not inCol) and (not inBlock)):
                         board[row][col] = i
-                        board = solveSudoku(board)
+                        if complete(board):
+                            setRet(copy.deepcopy(board))
+                        ret = solveSudoku(board)
                     
                     board[row][col] = 0
 
@@ -72,7 +86,9 @@ def main():
     with open('Example.json') as f:
         data = json.load(f)
 
-    pprint(solveSudoku(data["Problem"]))
+    board = solveSudoku(data["Problem"])
+    pprint(ret)
+    print (ret == data["Solution"])
 
 if __name__ == "__main__":
     main()
